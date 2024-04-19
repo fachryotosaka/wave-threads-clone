@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String @id @default(uuid())
+  name         String         @db.VarChar(100)
+  username     String         @unique @db.VarChar(100)
+  email        String         @unique
+  emailVerified DateTime?     @map("email_verified")
+  password     String?
+  role         Role          @default(user)
+  accounts     Account[]
+  Album        Album[]
+  sessions     Session[]
+  image        String?        @db.VarChar(100)
+  created_at   DateTime       @default(now())
+  Post         Post[]
+  Comment      Comment[]
+  Notification Notification[]
+  Likes        Likes[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
+  type              String?
+  provider          String
+  providerAccountId String   @map("provider_account_id")
+  token_type        String?
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  scope             String?
+  id_token          String?  @db.Text
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId], map: "accounts_user_id_fkey")
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String?  @map("user_id")
+  sessionToken String   @unique @map("session_token")
+  accessToken  String?  @map("access_token") @db.Text
+  expires      DateTime
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "sessions_user_id_fkey")
+  @@map("sessions")
+}
+
+model Album {
+  id          String      @id @default(cuid())
+  user_id     String      @map("user_id")
+  name        String
+  description String?
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  user        User?       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Post        Post[]
+
+  @@index([user_id], map: "albums_user_id_fkey")
+  @@map("albums")
+}
+
+model Post {
+  id            String   @id @default(cuid())
+  user          User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id       String
+  albumId       String?     @map("album_id")
+  album         Album?      @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  content       String
+  image         String?   @db.VarChar(100)
+  comment_count Int       @default(0)
+  like_count    Int       @default(0)
+  created_at    DateTime  @default(now())
+  Comment       Comment[]
+  Likes         Likes[]
+}
+
+model Comment {
+  id           String   @id @default(cuid())
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    String
+  post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post_id    String
+  content    String
+  created_at DateTime @default(now())
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    String
+  toUser_id  String 
+  content    String
+  created_at DateTime @default(now())
+}
+
+model Likes {
+  id      Int  @id @default(autoincrement())
+  post    Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post_id String
+  user    User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String
+}
+
+enum Role {
+  user
+  admin
+}
