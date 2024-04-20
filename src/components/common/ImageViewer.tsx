@@ -17,8 +17,8 @@ export default function ImageViewer({ image }: { image: string }) {
         <Image
           src={`${Env.APP_URL}/uploads/${image}`}
           alt={`Post_image_${image}`}
-          width={100}
-          height={100}
+          width={1000}
+          height={1000}
           
           className="w-full rounded-md mt-2 cursor-pointer"
         />

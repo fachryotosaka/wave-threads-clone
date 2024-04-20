@@ -129,19 +129,3 @@ export async function searchUser(query: string) {
   const response = await res.json();
   return response?.data;
 }
-
-export const fetchAlbumsByUser = async (id: string) => {  
-  try {
-    const res = await fetch(`${Env.APP_URL}/api/users/${id}/albums`, {
-      cache: 'no-cache',
-      headers: headers(),
-    });
-    if (!res.ok) {
-      console.error('Failed to fetch albums');
-    }
-    const response = await res.json();
-    return response?.data;
-  } catch (error) {
-    console.log(`Failed to fetch albums: ${error}`);
-  }
-};

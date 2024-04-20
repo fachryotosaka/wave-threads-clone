@@ -64,7 +64,7 @@ function AlbumNester({ albums }: { albums: AlbumType[] }) {
       <div className="flex flex-col gap-2">
         <div className="flex flex-row justify-between">
           <div
-            className="flex flex-row gap-3 cursor-pointer p-2 rounded-md bg-white hover:bg-muted transition-all w-64"
+            className="flex flex-row gap-3 cursor-pointer p-2 rounded-md text-muted-foreground hover:opacity-80 hover:bg-muted transition-all w-64"
             onClick={() => closeAlbum()}
             onKeyUp={(e) => e.key === "Enter" && closeAlbum()}
           >
@@ -96,7 +96,7 @@ function AlbumNester({ albums }: { albums: AlbumType[] }) {
             <Link
               href={`/?${new URLSearchParams({ albumId: openedAlbum.id })}`}
             >
-              <article className="flex flex-col justify-center h-full items-center gap-4 p-3 rounded-md bg-white hover:opacity-80 hover:bg-muted cursor-pointer transition-all">
+              <article className="flex flex-col justify-center h-full items-center gap-4 p-3 rounded-md text-muted-foreground hover:opacity-95 hover:bg-muted cursor-pointer transition-all">
                 <PlusIcon />
                 <p>Create Post</p>
               </article>

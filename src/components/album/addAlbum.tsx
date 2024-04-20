@@ -78,14 +78,14 @@ const AddAlbumModal: React.FC<AddAlbumModalProps> = ({ onClose }) => {
         {errors.name && <span className="text-red-400 font-bold mb-2">{errors.name}</span>} {/* Perubahan disini */}
         <input
           type="text"
-          placeholder="Nama Album"
+          placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="w-full border border-gray-300 rounded-md p-2 mb-3"
         />
         {errors.description && <span className="text-red-400 font-bold mb-2">{errors.description}</span>} {/* Perubahan disini */}
         <textarea
-          placeholder="Deskripsi Album"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="w-full border border-gray-300 rounded-md p-2 mb-3 resize-none"

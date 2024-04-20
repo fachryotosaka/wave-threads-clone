@@ -30,7 +30,7 @@ function AlbumCard({
 }) {
   return (
     <article
-      className="flex flex-col gap-2 p-3 rounded-md bg-white hover:opacity-80 hover:bg-muted cursor-pointer transition-all"
+      className="flex flex-col gap-2 p-3 rounded-md hover:opacity-95 text-muted-foreground hover:bg-muted cursor-pointer transition-all"
       tabIndex={0}
       onClick={onClick}
     >
@@ -38,9 +38,9 @@ function AlbumCard({
         <Image
           src={`${Env.APP_URL}/uploads/${image}`}
           alt={`Post_image_${image}`}
-          width={100}
-          height={100}
-          className="w-full rounded-md border border-black/10 aspect-square"
+          width={1000}
+          height={1000}
+          className="w-full rounded-md border border-black/10 object-cover w-full h-full aspect-square"
         />
       ) : (
         <div className="w-full rounded-md bg-white border border-black/10 aspect-square" />

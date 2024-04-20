@@ -12,38 +12,28 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import axios from "axios";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function DeletePostBtn({ post }: { post: PostType }) {
-  const { toast } = useToast();
   const router = useRouter();
-  const deletePost = () => {
-    axios
-      .delete(`/api/post/${post.id}`)
-      .then((res) => {
-        const response = res.data;
-  
-        if (response.status === 401) {
-          toast({
-            title: "Error",
-            description: "Un-Authorized",
-            className: "bg-red-400",
-          });
-        } else if (response.status === 200) {
-          toast({
-            title: "Success",
-            description: response.message,
-            className: "bg-green-400",
-          });
-          router.refresh();
-        }
-      })
-      .catch((err) => {
-        console.log("An error occurred:", err);
-        // Handle the error appropriately, such as displaying an error toast or message to the user.
+  const deletePost = async () => {
+    try {
+      const response = await fetch(`/api/post/${post.id}`, {
+        method: 'DELETE'
       });
+  
+      if (response.status === 401) {
+        toast.error("Unauthorized !");
+      } else if (response.status === 200) {
+        toast.success("Success delete comment !");
+        router.refresh();
+      }
+    } catch (err) {
+      console.log("An error occurred:", err);
+      // Handle the error appropriately, such as displaying an error toast or message to the user.
+    }
   };
   
 

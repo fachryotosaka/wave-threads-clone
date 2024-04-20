@@ -13,7 +13,7 @@ export default async function ShowUser({ params }: { params: { id: number } }) {
     <div>
       <DyanmicNavBar title="Show User" />
       <div>
-        {user && (
+      {user && (
           <div className="flex items-center space-x-4 mt-5">
             <div>
               <UserProfileAvatar name={user.name} image="" />
