@@ -1,5 +1,5 @@
 import { PlusIcon } from "lucide-react";
-import { useToast } from "../ui/use-toast";
+import { toast } from "sonner";
 import { Input } from "../ui/input";
 import {
   Dialog,
@@ -18,7 +18,6 @@ import { Button } from "../ui/button";
 
 export default function CreateAlbumCard() {
   const router = useRouter();
-  const { toast } = useToast();
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,11 +47,7 @@ export default function CreateAlbumCard() {
           setDescription("");
           setErrors({});
 
-          toast({
-            title: "Success",
-            description: response.message,
-            className: "bg-green-400",
-          });
+          toast.success("Success create album !");
         } else if (res.status === 400) {
           console.log("ok err");
           setErrors(response.errors);

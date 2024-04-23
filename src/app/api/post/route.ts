@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
         user_id: session.user!.id!,
         image: data.image ?? null,
         albumId: payload.albumId ?? null,
-      },
+      },  
     });
 
     return NextResponse.json({

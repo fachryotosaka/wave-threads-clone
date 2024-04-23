@@ -19,17 +19,12 @@ import {
   EmailShareButton,
   EmailIcon,
 } from "next-share";
-import { useToast } from "../ui/use-toast";
+import { toast } from "sonner";
 
 export default function ShareModal({ url }: { url: string }) {
-  const { toast } = useToast();
   const copyUrl = async () => {
     navigator.clipboard.writeText(url);
-    toast({
-      title: "Copied!",
-      description: "Url Copied successfully!",
-      className: "bg-green-500",
-    });
+    toast.success("Success Copy Url !");
   };
   return (
     <Dialog>

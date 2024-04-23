@@ -18,6 +18,7 @@ import {
 } from "../ui/alert-dialog";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const useStore = create<{
   openedAlbum?: AlbumType;
@@ -78,20 +79,22 @@ function AlbumNester({ albums }: { albums: AlbumType[] }) {
             />
           )}
         </div>
-        {openedAlbum.posts.length === 0 ? (
-          <div className="flex flex-col gap-5 items-center">
-            <h1 className="text-center mt-5">No posts found</h1>
-            <Button variant="outline" className="w-48" asChild>
-              <Link
-                href={`/?${new URLSearchParams({
-                  [ADD_THREAD_SEARCH_PARAM_ALBUM_ID]: openedAlbum.id,
-                })}`}
-              >
-                Create a new post
-              </Link>
-            </Button>
-          </div>
-        ) : (
+        {openedAlbum.posts?.length === 0 ? (
+        <div className="flex flex-col gap-5 items-center">
+          <h1 className="text-center mt-5">No posts found</h1>
+          <Button variant="outline" className="w-48" asChild>
+            <Link
+              href={`/?${new URLSearchParams({
+                [ADD_THREAD_SEARCH_PARAM_ALBUM_ID]: openedAlbum.id,
+              })}`}
+            >
+              Create a new post
+            </Link>
+          </Button>
+        </div>
+      ) : (
+        // Your other logic here
+
           <div className="grid grid-cols-3 gap-1">
             <Link
               href={`/?${new URLSearchParams({ albumId: openedAlbum.id })}`}
@@ -101,13 +104,14 @@ function AlbumNester({ albums }: { albums: AlbumType[] }) {
                 <p>Create Post</p>
               </article>
             </Link>
-            {openedAlbum.posts.map((post) => (
-              <AlbumCard
-                key={post.id}
-                image={post.image}
-                href={`/post/${post.id}`}
-              />
-            ))}
+            {openedAlbum.posts?.map((post) => (
+            <AlbumCard
+              key={post.id}
+              image={post.image}
+              href={`/post/${post.id}`}
+            />
+          ))}
+
           </div>
         )}
       </div>
@@ -125,11 +129,12 @@ function AlbumNester({ albums }: { albums: AlbumType[] }) {
             name: album.name,
             description: truncateString(album.description, 10),
           }}
-          image={album.posts[0]?.image}
+          image={album.posts?.[0]?.image}
         />
       ))}
     </div>
   );
+  
 }
 
 function AlbumDeleteButton({ album }: { album: { name: string; id: string } }) {
@@ -142,6 +147,7 @@ function AlbumDeleteButton({ album }: { album: { name: string; id: string } }) {
         body: JSON.stringify({ id: album.id }),
       }),
     onSuccess: () => {
+      toast.success("Success create album !");
       closeAlbum();
       refresh();
     },

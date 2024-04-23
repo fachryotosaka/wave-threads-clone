@@ -1,6 +1,5 @@
-import React from "react";
-
 import { getServerSession } from "next-auth";
+import React, { useEffect, useState } from 'react';
 import UserProfileAvatar from "@/components/common/UserProfileAvatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchUserAlbums, fetchUserComments, fetchUserPosts } from "@/lib/serverMethods";
@@ -12,12 +11,22 @@ import {
   authOptions,
 } from "@/app/api/auth/[...nextauth]/options";
 import UserAlbumDisplay from "@/components/album/UserAlbumDisplay";
+import prisma from "@/DB/db.config";
+import ExportButton from "@/components/exportExcel";
+import EditProfileDialog from "@/components/profile/form";
 
 export default async function Profile() {
+
+  
   const session: CustomSession | null = await getServerSession(authOptions);
   const posts: Array<PostType> | [] = await fetchUserPosts();
   const comments: Array<CommentType> | [] = await fetchUserComments();
   const albums: Array<AlbumType> | [] = await fetchUserAlbums();
+
+
+
+
+
   return (
     <div>
       <DyanmicNavBar title="Profile" />
@@ -33,7 +42,10 @@ export default async function Profile() {
           <p className="text-md text-orange-300 ">@{ session?.user?.username + "#" + `${Math.floor(1000 + Math.random() * 9000)}`}</p>
           <h1 className="text-xl">{session?.user?.email}</h1>
         </div>
-      </div>
+      </div> <br />
+        <div>
+        <EditProfileDialog userProfile={session?.user} />
+        </div>
 
       <div className="mt-10 ">
         <Tabs defaultValue="post" className="w-full">

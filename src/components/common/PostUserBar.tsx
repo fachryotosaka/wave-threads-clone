@@ -14,7 +14,7 @@ export default function PostUserBar({
   return (
     <div className="flex">
       <div>
-        <UserAvatar name={post.user.name} image="" />
+        <UserAvatar name={post.user.name} image={post.user.image} />
       </div>
       <div className="flex ml-2 justify-between items-start w-full">
         <p className="font-bold">{post.user.name}</p>

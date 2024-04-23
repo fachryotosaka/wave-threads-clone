@@ -41,10 +41,13 @@ type PostType = {
   like_count: number;
   created_at: string;
   user: User;
+  Comments: Array<CommentType>;
   Likes: Array<PostLikeType> | [];
 };
 
 type CommentType = {
+  map(arg0: (comment: any, index: any) => React.JSX.Element | null): React.ReactNode;
+  length: number;
   id: string;
   user_id: number;
   post_id: number;

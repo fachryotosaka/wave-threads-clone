@@ -11,8 +11,9 @@ import { getAuthSession } from "../api/auth/[...nextauth]/options";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: "Threads App",
-  description: "The Threads app to share your thoughts and much more.",
+  title: "Wave",
+  description: "The Threads Clone app to share your thoughts and much more.",
+  icons: "/favicon.ico",
 };
 
 export default async function RootLayout({

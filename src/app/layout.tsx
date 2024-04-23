@@ -14,8 +14,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Threads App",
-  description: "The Threads app to share your thoughts and much more.",
+  title: "Wave",
+  description: "The Threads Clone app to share your thoughts and much more.",
   icons: "/favicon.ico",
 };
 

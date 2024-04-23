@@ -17,7 +17,7 @@ export function imagevalidator(
   }
   if (size) {
     const fileInMB = bytesToMB(size!);
-    if (fileInMB > 2) {
+    if (fileInMB > 10) {
       flag = "Image should be less than 2 MB.";
     } else {
       flag = null;
